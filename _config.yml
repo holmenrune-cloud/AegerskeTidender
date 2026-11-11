@@ -1,9 +1,9 @@
-title: Nettmagasinet
-description: Et uavhengig nettmagasin
-lang: nb-NO
+title: "Ægerske Tidender"
+description: "Et uavhengig nettmagasin fra Eiker"
 timezone: Europe/Oslo
-url: ""
-baseurl: ""
+url: "https://holmenrune-cloud.github.io"
+baseurl: "/AegerskeTidender"
+lang: nb-NO
 permalink: /:categories/:year/:month/:day/:title/
 markdown: kramdown
 plugins:
@@ -12,3 +12,6 @@ exclude:
   - scripts
   - README.md
   - requirements.txt
+  - vendor
+  - Gemfile
+  - Gemfile.lock
