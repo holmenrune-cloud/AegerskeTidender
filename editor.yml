@@ -1,0 +1,43 @@
+name: Redaksjonsagent
+on:
+  schedule:
+    - cron: '0 8,9 * * 1-5' # Summer/winter UTC; Python checks 10:00 Europe/Oslo
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: 'Ekstraordinær sak: emne og kildelenker'
+        required: true
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: editor
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - name: Research and write
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-4.1-mini' }}
+          TOPIC: ${{ inputs.topic }}
+          MANUAL: ${{ github.event_name == 'workflow_dispatch' }}
+          RSS_FEEDS: ${{ vars.RSS_FEEDS }}
+        run: python scripts/publish.py
+      - name: Commit new articles
+        run: |
+          git config user.name 'Redaksjonsagent'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add _posts
+          if ! git diff --cached --quiet; then
+            git commit -m 'Publiser artikler'
+            git push
+          fi
