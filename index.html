@@ -2,4 +2,19 @@
 layout: default
 title: Forside
 ---
-<h1>Siste artikler</h1><section class="cards">{% for post in site.posts limit: 30 %}<article class="card"><p class="eyebrow">{{ post.date | date: '%d.%m.%Y' }} · {{ post.categories | join: ', ' }}</p><h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2><p>{{ post.description | escape }}</p></article>{% endfor %}</section>
+{% assign featured = site.posts.first %}
+{% assign second = site.posts | slice: 1, 3 %}
+<section class="lead" aria-label="Hovedsak">
+{% if featured %}
+<p class="section-tag">HOVEDOPPSLAG · {{ featured.categories | join: ' / ' | upcase }}</p>
+<h1><a href="{{ featured.url | relative_url }}">{{ featured.title | escape }}</a></h1>
+{% if featured.subtitle %}<p class="deck">{{ featured.subtitle | escape }}</p>{% elsif featured.description %}<p class="deck">{{ featured.description | escape }}</p>{% endif %}
+<div class="lead-grid"><div class="lead-text"><p class="date">{{ featured.date | date: '%d.%m.%Y' }}</p><p>{{ featured.excerpt | strip_html | truncatewords: 52 }}</p><a class="read-more" href="{{ featured.url | relative_url }}">Les hele saken →</a></div>
+<div class="lead-visual">{% if featured.image %}<img src="{{ featured.image | relative_url }}" alt="{{ featured.image_alt | default: featured.title | escape }}">{% else %}<img src="{{ '/assets/img/bridge.jpg' | relative_url }}" alt="Historiserende illustrasjon av brobygging">{% endif %}<small>{% if featured.image %}{{ featured.image_credit | default: 'Illustrasjon' | escape }}{% else %}Dekorativt eksempelbilde fra avismockup – ikke dokumentarfoto{% endif %}</small></div></div>
+{% else %}<h1>Ægerske Tidender</h1><p class="deck">Nyheter, historier og perspektiver fra Eiker</p><p>Første artikkel kommer snart.</p>{% endif %}
+</section>
+<section class="three-news" aria-label="Flere saker">
+{% for post in second %}<article class="news-card"><p class="section-tag">{{ post.categories | join: ' / ' | upcase }}</p><h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2>{% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.image_alt | default: post.title | escape }}">{% else %}{% assign n = forloop.index %}{% if n == 1 %}<img src="{{ '/assets/img/meieri.jpg' | relative_url }}" alt="Historiserende meieriillustrasjon">{% elsif n == 2 %}<img src="{{ '/assets/img/sport.jpg' | relative_url }}" alt="Historiserende idrettsillustrasjon">{% else %}<img src="{{ '/assets/img/trees.jpg' | relative_url }}" alt="Historiserende skoleillustrasjon">{% endif %}{% endif %}<p>{{ post.description | default: post.excerpt | strip_html | truncatewords: 28 }}</p><a class="read-more" href="{{ post.url | relative_url }}">Les mer →</a></article>{% endfor %}
+{% if second.size == 0 %}<div class="empty-note">Flere saker kommer etter hvert som redaksjonen publiserer.</div>{% endif %}
+</section>
+<section class="bottom-grid"><div class="brief"><h2>Smånytt</h2>{% for post in site.posts offset:4 limit:5 %}<p>◆ <a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></p>{% else %}<p>◆ Følg med på nye saker fra Eiker.</p>{% endfor %}</div><div class="advert"><h2>Fra Eiker</h2><p>Historier fra bygdene, industrien og menneskene.</p><span>LES · LÆR · TENK</span></div><div class="advert"><h2>Sykkel & samferdsel</h2><p>Fortidens veier. Framtidens ferdsel.</p><span>ÆGERSKE TIDENDER</span></div><div class="advert"><h2>Radio</h2><p>Nyheter og kultur i et nytt århundre.</p><span>ANNONSEPLASS</span></div></section>

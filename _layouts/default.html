@@ -1,1 +1,11 @@
-<!doctype html><html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{% if page.title %}{{ page.title | escape }} – {% endif %}{{ site.title | escape }}</title><meta name="description" content="{{ page.description | default: site.description | escape }}"><link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}"><link rel="alternate" type="application/atom+xml" title="RSS" href="{{ '/feed.xml' | relative_url }}"></head><body><header><div class="wrap"><a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a><p>{{ site.description }}</p><nav><a href="{{ '/' | relative_url }}">Forside</a><a href="{{ '/arkiv/' | relative_url }}">Arkiv</a></nav></div></header><main class="wrap">{{ content }}</main><footer class="wrap">© {{ site.time | date: '%Y' }} {{ site.title }}</footer></body></html>
+<!doctype html>
+<html lang="nb"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% if page.title and page.title != 'Forside' %}{{ page.title | escape }} – {% endif %}{{ site.title | escape }}</title>
+<meta name="description" content="{{ page.description | default: site.description | escape }}">
+<link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+<link rel="alternate" type="application/atom+xml" title="RSS" href="{{ '/feed.xml' | relative_url }}"></head>
+<body><div class="newspaper"><header class="masthead">
+<a href="{{ '/' | relative_url }}" aria-label="Ægerske Tidender – forside"><img src="{{ '/assets/img/masthead.jpg' | relative_url }}" alt="ÆGERSKE TIDENDER – historisk avismasthead"></a>
+<div class="edition"><span>Uavhengig nettavis fra Eiker</span><span>{{ site.time | date: '%d.%m.%Y' }} · Digital utgave</span><span>Vestfossen · Hokksund</span></div>
+<nav aria-label="Hovedmeny"><a href="{{ '/' | relative_url }}">Forside</a><a href="{{ '/arkiv/' | relative_url }}">Alle artikler</a><a href="{{ '/feed.xml' | relative_url }}">RSS</a></nav>
+</header><main>{{ content }}</main><footer>ÆGERSKE TIDENDER · {{ site.time | date: '%Y' }} · Uavhengig nettmagasin fra Eiker</footer></div></body></html>
