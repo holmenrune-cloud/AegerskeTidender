@@ -1,0 +1,14 @@
+title: Nettmagasinet
+description: Et uavhengig nettmagasin
+lang: nb-NO
+timezone: Europe/Oslo
+url: ""
+baseurl: ""
+permalink: /:categories/:year/:month/:day/:title/
+markdown: kramdown
+plugins:
+  - jekyll-feed
+exclude:
+  - scripts
+  - README.md
+  - requirements.txt

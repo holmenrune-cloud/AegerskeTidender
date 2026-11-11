@@ -1,0 +1,4 @@
+---
+layout: default
+---
+<article><p class="eyebrow">{{ page.categories | join: ' · ' }} · {{ page.date | date: '%d.%m.%Y' }}</p><h1>{{ page.title | escape }}</h1>{% if page.description %}<p class="lead">{{ page.description | escape }}</p>{% endif %}<div class="article">{{ content }}</div>{% if page.tags.size > 0 %}<p class="tags">Emner: {{ page.tags | join: ', ' }}</p>{% endif %}</article>

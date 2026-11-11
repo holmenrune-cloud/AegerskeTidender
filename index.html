@@ -1,0 +1,5 @@
+---
+layout: default
+title: Forside
+---
+<h1>Siste artikler</h1><section class="cards">{% for post in site.posts limit: 30 %}<article class="card"><p class="eyebrow">{{ post.date | date: '%d.%m.%Y' }} · {{ post.categories | join: ', ' }}</p><h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2><p>{{ post.description | escape }}</p></article>{% endfor %}</section>
